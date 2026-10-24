@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Área bajo la curva: curso de integrales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]}};</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Encabezado-->
+<header class="datos">
+  <span><b>Emily Jimena de León Caminade</b> · Carnet 9941-25-13659</span>
+  <span>Ingeniería en Sistemas · Cálculo II</span>
+  <span>Universidad Mariano Gálvez</span>
+  <span>Entrega: 24 de octubre de 2026</span>
+</header>  
+
+<nav role="tablist" aria-label="Secciones del curso">
+  <button role="tab" data-ir="inicio" aria-selected="true">Inicio</button>
+  <button role="tab" data-ir="contenido" aria-selected="false">Contenido</button>
+  <button role="tab" data-ir="ejemplos" aria-selected="false">Ejemplos</button>
+  <button role="tab" data-ir="problemas" aria-selected="false">Problemas propuestos</button>
+  <button role="tab" data-ir="videos" aria-selected="false">Videos</button>
+  <button role="tab" data-ir="preguntas" aria-selected="false">Preguntas</button>
+  <button role="tab" data-ir="fuentes" aria-selected="false">Fuentes</button>
+</nav>
+
+<main>
+
+<!-- ============ INICIO ============ -->
+<section id="inicio" class="activa">
+  <div class="panel">
+    <div class="planeta" aria-hidden="true"></div>
+    <div>
+      <p class="etiqueta">Integralactic ⏾⋆. ̊ · Mi curso de cáculo</p>
+      <h1 class="display">Aprendamos a calcular el área bajo una curva 🪐</h1>
+      <p class="lema">Un rectángulo se mide con base por altura - Una curva cambia de altura en cada punto, y para resolver esto usamos las integrales</p>
+      <div class="acciones">
+        <button class="btn" data-ir="contenido">Empecemos</button>
+        <button class="btn sec" data-ir="ejemplos">Veamos un ejemplo</button>
+      </div>
+      <dl class="ficha">
+        <dt>Tema del curso</dt><dd>Área bajo la curva con integrales</dd>
+        <dt>Nombre</dt><dd>Emily Jimena de León Caminade</dd>
+        <dt>Institución</dt><dd>Universidad Mariano Gálvez de Guatemala · Sede Portales</dd>
+        <dt>Curso</dt><dd>Cálculo II · Sección A</dd>
+        <dt>Fecha de entrega</dt><dd>24 de octubre de 2026</dd>
+      </dl>
+    </div>
+    <div class="visor">
+      <p class="pista">Mueve el control y observa cómo cambia el área bajo $y=x^2$.</p>
+      <svg id="grafica" viewBox="0 0 340 230" role="img" aria-label="Gráfica de y igual x al cuadrado con el área sombreada entre 0 y b"></svg>
+      <label for="b">Límite derecho: <b>b = <span id="bval">2.0</span></b></label>
+      <input id="b" type="range" min="0.2" max="3" step="0.1" value="2">
+      <p class="lectura" id="lectura"></p>
+    </div>
+  </div>
+
+  <h2>Lo que vamos a aprender ⏾⋆. ̊ </h2>
+  <div class="logros">
+    <div><h3>Entender el área ⋆✴︎˚｡⋆</h3><p>Qué significa el área bajo una curva y por qué una integral la calcula.</p></div>
+    <div><h3>Leer la notación ⋆✴︎˚｡⋆</h3><p>Usar con seguridad la sumatoria y el símbolo de integral.</p></div>
+    <div><h3>Calcular con el TFC ⋆✴︎˚｡⋆</h3><p>Resolver integrales definidas con el Teorema Fundamental del Cálculo.</p></div>
+    <div><h3>Aplicar lo aprendido ⋆✴︎˚｡⋆</h3><p>Hallar el área bajo una curva y el área entre dos curvas.</p></div>
+  </div>
+
+  <h2>¿Dónde usamos el área bajo una curva?</h2>
+  <div class="aplic">
+    <div class="hoja"><h3>Física</h3><p>El área bajo una gráfica de velocidad contra tiempo es la distancia recorrida.</p></div>
+    <div class="hoja"><h3>Economía</h3><p>El área bajo una curva de ingresos por día da el ingreso total de un periodo.</p></div>
+    <div class="hoja"><h3>Medicina</h3><p>El área bajo la curva de concentración de un fármaco en la sangre indica cuánto medicamento recibió el cuerpo.</p></div>
+    <div class="hoja"><h3>Ingeniería</h3><p>El área bajo la curva del caudal de un río o una tubería da el volumen de agua que pasó.</p></div>
+  </div>
+
+  <h2>Antes de que empecemos</h2>
+  <div class="dos">
+    <div class="hoja">
+      <h3>Puede ayudarte tener estos conocimientos</h3>
+      <ul>
+        <li>Álgebra básica: despejar, factorizar y resolver ecuaciones de segundo grado.</li>
+        <li>Qué es una función y cómo se grafica.</li>
+        <li>Derivadas de potencias, porque la integración es el camino inverso.</li>
+        <li>Calcular el área de rectángulos y trapecios.</li>
+      </ul>
+    </div>
+    <div class="hoja">
+      <h3>Conceptos que debes saber</h3>
+      <dl>
+        <dt>Integrando</dt><dd>La función que está dentro de la integral.</dd>
+        <dt>Límites de integración</dt><dd>Los valores $a$ y $b$ donde empieza y termina la región.</dd>
+        <dt>Antiderivada</dt><dd>Una función cuya derivada es el integrando.</dd>
+        <dt>Unidades cuadradas</dt><dd>La unidad en que se expresa un área.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <h2>Repasemos el camino del curso</h2>
+  <ol class="ruta">
+    <li><button data-ir="contenido"><span>1</span>Lee el contenido</button></li>
+    <li><button data-ir="ejemplos"><span>2</span>Repasa los ejemplos</button></li>
+    <li><button data-ir="problemas"><span>3</span>Practica con problemas</button></li>
+    <li><button data-ir="videos"><span>4</span>Mira los videos</button></li>
+    <li><button data-ir="preguntas"><span>5</span>Comprueba lo aprendido</button></li>
+  </ol>
+</section>
+
+<!-- ============ CONTENIDO ============ -->
+<section id="contenido">
+  <h2>Contenido ⏾⋆. ̊</h2>
+  <p>Aquí explicaremos el tema paso a paso. Si algo no te queda claro a la primera, no te preocupes: es normal. Léelo con calma y mira los ejemplos.</p>
+
+  <article class="hoja">
+    <h3>1. ¿Qué es el área bajo una curva?</h3>
+    <p>Con un rectángulo todo es fácil: base por altura y listo, porque la altura nunca cambia. Pero en una curva la altura cambia en cada punto, así que esa fórmula ya no nos sirve tal cual.</p>
+    <p>Cuando hablamos del <b>área bajo una curva</b>, hablamos de la zona que queda encerrada entre cuatro cosas: la gráfica de $y=f(x)$ arriba, el eje $x$ abajo y dos rectas verticales, $x=a$ a la izquierda y $x=b$ a la derecha. Para empezar vamos a trabajar con funciones que no bajan del eje $x$, o sea que $f(x)\ge 0$ en $[a,b]$.</p>
+    <p class="aviso"><b>¿Y esto para qué sirve?</b> Por ejemplo, si graficas la velocidad de un carro contra el tiempo, el área bajo esa gráfica te dice cuánta distancia recorrió. Con el consumo de agua por hora pasa igual: el área es el total que se gastó.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>2. Notación de sumatoria</h3>
+    <p>La sumatoria es una manera de escribir sumas largas sin cansarnos. El símbolo $\sum$ es la letra sigma, que viene siendo la "S" griega de <i>suma</i>:</p>
+    $$\sum_{i=1}^{n} a_i = a_1 + a_2 + \cdots + a_n$$
+    <p>Se lee "la suma de los $a_i$ desde $i=1$ hasta $i=n$". El número de abajo es donde arranca el contador y el de arriba es donde termina.</p>
+    <p><b>Ejemplo.</b> $\displaystyle\sum_{i=1}^{4} i^2 = 1^2+2^2+3^2+4^2 = 1+4+9+16 = 30$</p>
+    <p>¿Por qué nos importa? Porque el símbolo de integral $\int$ es una "S" estirada. Básicamente, una integral es una suma de un montón de pedacitos súper pequeños.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>Herramienta: cómo graficar una función con una tabla de valores</h3>
+    <p>Antes de calcular un área, lo mejor es dibujarla para saber qué región estamos midiendo. Para graficar cualquier función podemos armar una tabla de valores. Así se hace:</p>
+    <ol class="pasos">
+      <li><b>Elegimos valores de $x$.</b> Conviene incluir el $0$, algunos positivos y negativos, y los límites $a$ y $b$ del problema.</li>
+      <li><b>Calculamos $y=f(x)$ para cada uno.</b> Es solo sustituir. Con $f(x)=x^2-4$: si $x=-3$, $y=(-3)^2-4=5$; si $x=0$, $y=-4$; si $x=2$, $y=0$.</li>
+      <li><b>Armamos la tabla.</b> Ponemos una columna para $x$ y otra para cada función; cada fila es un punto $(x,y)$.</li>
+      <li><b>Ubicamos los puntos en el plano.</b> $x$ va en horizontal y $y$ en vertical.</li>
+      <li><b>Los unimos.</b> En una recta bastan dos puntos (el tercero sirve para comprobar). En una parábola u otra curva, los unimos con un trazo suave, sin picos.</li>
+      <li><b>Marcamos los cortes con el eje $x$</b> (donde $y=0$) y sombreamos la región entre la curva, el eje $x$ y las rectas $x=a$ y $x=b$.</li>
+    </ol>
+    <p><b>Con una parábola:</b> $f(x)=x^2-4$.</p>
+    <figure class="grafico" id="g-tabla1"></figure>
+    <p class="aviso">Fíjate que en la tabla sale $y=0$ cuando $x=-2$ y $x=2$: ahí la curva corta el eje $x$. Esos puntos nos van a servir más adelante para partir una integral.</p>
+    <p><b>Con una recta:</b> $f(x)=2x+1$.</p>
+    <figure class="grafico" id="g-tabla2"></figure>
+  </article>
+
+  <article class="hoja">
+    <h3>3. La integral definida</h3>
+    <p>La <b>integral definida</b> de $f$ entre $a$ y $b$ se escribe así:</p>
+    $$\int_a^b f(x)\,dx$$
+    <p>Cuando $f(x)\ge 0$, esto es justo el <b>área bajo la curva</b> entre $x=a$ y $x=b$. Cada parte tiene su nombre: $a$ y $b$ son los <i>límites de integración</i>, $f(x)$ es el <i>integrando</i> y $dx$ nos dice que estamos integrando respecto a $x$.</p>
+    <p><b>Para comprobarlo:</b> si $f(x)=2$ entre $1$ y $3$, la región es un rectángulo de base $2$ y altura $2$, así que $\int_1^3 2\,dx=4$. O sea que la integral da lo mismo que ya sabíamos, con la ventaja de que también funciona con curvas.</p>
+    <p class="aviso">Ojo: si la curva queda por debajo del eje $x$, la integral sale <b>negativa</b>. Más adelante vemos cómo arreglarlo para sacar el área.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>4. Propiedades de la integral definida</h3>
+    <p>Estas propiedades nos ayudan a partir una integral complicada en pedazos más fáciles:</p>
+    <ul>
+      <li>$\displaystyle\int_a^a f(x)\,dx=0$ (si la región no tiene ancho, no tiene área).</li>
+      <li>$\displaystyle\int_a^b f(x)\,dx=-\int_b^a f(x)\,dx$ (si cambias el orden de los límites, cambia el signo).</li>
+      <li>$\displaystyle\int_a^b k\,f(x)\,dx=k\int_a^b f(x)\,dx$ (una constante puede salir de la integral).</li>
+      <li>$\displaystyle\int_a^b [f(x)\pm g(x)]\,dx=\int_a^b f(x)\,dx\pm\int_a^b g(x)\,dx$ (se integra término por término).</li>
+      <li>$\displaystyle\int_a^b f(x)\,dx=\int_a^c f(x)\,dx+\int_c^b f(x)\,dx$ para cualquier $c$ entre $a$ y $b$ (el área se puede cortar en trozos).</li>
+    </ul>
+  </article>
+
+  <article class="hoja">
+    <h3>5. Antiderivadas e integral indefinida</h3>
+    <p>Una <b>antiderivada</b> de $f$ es una función $F$ cuya derivada es $f$, es decir, $F'(x)=f(x)$. Es como derivar, pero al revés. Como las constantes desaparecen al derivar, una función tiene infinitas antiderivadas que solo se diferencian por una constante. Por eso la <b>integral indefinida</b> siempre lleva un $+C$:</p>
+    $$\int f(x)\,dx=F(x)+C$$
+    <p>Las reglas básicas que vamos a usar son estas:</p>
+    <ul>
+      <li>$\displaystyle\int k\,dx=kx+C$</li>
+      <li>$\displaystyle\int x^n\,dx=\frac{x^{n+1}}{n+1}+C$, siempre que $n\neq -1$</li>
+      <li>$\displaystyle\int \frac{1}{x}\,dx=\ln|x|+C$</li>
+      <li>$\displaystyle\int e^x\,dx=e^x+C$</li>
+      <li>$\displaystyle\int \cos x\,dx=\sin x+C \qquad \int \sin x\,dx=-\cos x+C$</li>
+    </ul>
+    <p><b>Ejemplo.</b> $\int (3x^2+2x)\,dx = x^3+x^2+C$. Y para comprobar, derivamos el resultado: $(x^3+x^2)'=3x^2+2x$. Sí es lo que teníamos.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>6. El Teorema Fundamental del Cálculo</h3>
+    <p>Este teorema es el que une las dos ideas del curso: el área (la integral definida) y la antiderivada. Nos dice que, si $F$ es una antiderivada de $f$, entonces</p>
+    $$\int_a^b f(x)\,dx=F(b)-F(a)$$
+    <p>Muchas veces se escribe $F(b)-F(a)$ como $\Big[F(x)\Big]_a^b$. <b>¿Por qué funciona?</b> Porque $F(x)$ va acumulando área desde un punto inicial hasta $x$, y al restar $F(a)$ de $F(b)$ nos queda justo el área que hay entre $a$ y $b$.</p>
+    <p><b>Para resolver una integral definida hacemos tres pasos:</b></p>
+    <ol>
+      <li>Buscamos una antiderivada $F$ (no hace falta la constante $C$, porque se cancela).</li>
+      <li>Evaluamos $F(b)$ y $F(a)$.</li>
+      <li>Restamos: $F(b)-F(a)$.</li>
+    </ol>
+  </article>
+
+  <article class="hoja">
+    <h3>7. Cálculo del área bajo una curva</h3>
+    <p>Depende de dónde esté la curva:</p>
+    <ul>
+      <li><b>Si $f(x)\ge0$ en $[a,b]$:</b> el área es directamente $A=\displaystyle\int_a^b f(x)\,dx$.</li>
+      <li><b>Si $f(x)\le0$ en $[a,b]$:</b> la integral sale negativa, así que el área es $A=-\displaystyle\int_a^b f(x)\,dx$.</li>
+      <li><b>Si $f$ cruza el eje $x$:</b> partimos el intervalo en los puntos donde $f(x)=0$ y sumamos el valor absoluto de cada trozo.</li>
+    </ul>
+    <p><b>Mi recomendación para no perderse:</b> (1) dibuja la gráfica, puedes usar una tabla de valores; (2) encuentra dónde corta el eje $x$ resolviendo $f(x)=0$; (3) separa los tramos donde $f$ es positiva y donde es negativa; (4) integra cada tramo; (5) suma las áreas, todas positivas.</p>
+    <p class="aviso">Si integras todo de una vez sin partir el intervalo, lo negativo le resta a lo positivo y el resultado ya no es el área.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>8. Área entre dos curvas</h3>
+    <p>Si en $[a,b]$ la curva $f$ está arriba de $g$ (o sea, $f(x)\ge g(x)$), el área que hay entre las dos es</p>
+    $$A=\int_a^b \big[f(x)-g(x)\big]\,dx$$
+    <p>La idea es sencilla: al área bajo la curva de arriba le quitamos el área bajo la curva de abajo, y lo que sobra es la región del medio.</p>
+    <p><b>Paso a paso:</b> (1) dibujamos las dos curvas; (2) buscamos dónde se cruzan resolviendo $f(x)=g(x)$, y esos valores serán $a$ y $b$; (3) vemos cuál queda arriba; (4) integramos la resta.</p>
+  </article>
+
+</section>
+
+<!-- ============ EJEMPLOS ============ -->
+<section id="ejemplos">
+  <h2>Ejemplos ⏾⋆. ̊</h2>
+  <p>Veamos algunos ejemplos para entender mejor lo que vimos antes. Estos van paso a paso para que los conceptos que vimos queden claros para empezar a aplicarlos. Lee cada uno, toma todo el tiempo que nece  sites.</p>
+
+  <article class="hoja">
+    <h3>Ejemplo 1: área bajo $f(x)=x^2$ entre $x=0$ y $x=3$</h3>
+    <ol class="pasos">
+      <li><b>Planteamiento.</b> Nos piden el área bajo $f(x)=x^2$ desde $x=0$ hasta $x=3$. Como $x^2\ge 0$, la curva nunca baja del eje $x$, así que el área es directamente la integral.</li>
+      <li><b>Límites.</b> Aquí no hay otra función con la que se cruce, así que usamos los límites del problema: $a=0$ y $b=3$.</li>
+      <li><b>Tabla de valores y gráfica.</b> Evaluamos $f(x)=x^2$ en varios valores de $x$ y ubicamos los puntos.<figure class="grafico" id="g-ej1"></figure></li>
+      <li><b>Integral.</b> $$A=\int_0^3 x^2\,dx$$</li>
+      <li><b>Resolvemos.</b> Con la regla de potencias ($n=2$), la antiderivada es $F(x)=\dfrac{x^3}{3}$. Evaluamos: $F(3)=\dfrac{27}{3}=9$ y $F(0)=0$. Restamos: $A=9-0=9$.</li>
+    </ol>
+    <p class="resultado">Resultado: $A=9\ u^2$. Compruébalo en Inicio: con $b=3$ la lectura da $9.00$.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>Ejemplo 2: área bajo $f(x)=2x+1$ entre $x=1$ y $x=3$</h3>
+    <ol class="pasos">
+      <li><b>Planteamiento.</b> Queremos el área bajo la recta $f(x)=2x+1$ entre $x=1$ y $x=3$. En ese tramo $f(x)\ge 3>0$, así que está sobre el eje $x$.</li>
+      <li><b>Límites.</b> $a=1$ y $b=3$.</li>
+      <li><b>Tabla de valores y gráfica.</b> Es una recta, entonces con pocos puntos nos alcanza.<figure class="grafico" id="g-ej2"></figure></li>
+      <li><b>Integral.</b> $$A=\int_1^3 (2x+1)\,dx$$</li>
+      <li><b>Resolvemos.</b> Integramos término por término: $\int 2x\,dx=x^2$ y $\int 1\,dx=x$, así que $F(x)=x^2+x$. Entonces $F(3)=9+3=12$ y $F(1)=1+1=2$. Restamos: $A=12-2=10$.</li>
+      <li><b>Comprobamos con geometría.</b> La región es un trapecio con alturas $f(1)=3$ y $f(3)=7$ y base $2$: $\frac{3+7}{2}\cdot 2=10$. Coincide.</li>
+    </ol>
+    <p class="resultado">Resultado: $A=10\ u^2$.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>Ejemplo 3: área entre $f(x)=x^2-4$ y el eje $x$, de $x=0$ a $x=3$</h3>
+    <ol class="pasos">
+      <li><b>Planteamiento.</b> Queremos el área entre la parábola $f(x)=x^2-4$ y el eje $x$, de $x=0$ a $x=3$. Ojo: esta curva cruza el eje $x$, así que hay que tener cuidado.</li>
+      <li><b>Intersección con el eje $x$.</b> Igualamos $f(x)=0$: $x^2-4=0\Rightarrow x=\pm2$. Solo $x=2$ cae en $[0,3]$, así que partimos el intervalo en $[0,2]$ y $[2,3]$.</li>
+      <li><b>Tabla de valores y gráfica.</b> En la tabla se ve el cambio de signo: pasamos de $-4$ a $5$.<figure class="grafico" id="g-ej3"></figure></li>
+      <li><b>Integral.</b> Como el primer tramo está debajo del eje, le ponemos valor absoluto para que el área salga positiva: $$A=\left|\int_0^2 (x^2-4)\,dx\right|+\int_2^3 (x^2-4)\,dx$$</li>
+      <li><b>Resolvemos cada tramo.</b> La antiderivada es $F(x)=\dfrac{x^3}{3}-4x$.<br>Tramo $[0,2]$: $F(2)-F(0)=\left(\frac{8}{3}-8\right)-0=-\frac{16}{3}$. Es negativo porque está bajo el eje, entonces el área es $\frac{16}{3}$.<br>Tramo $[2,3]$: $F(3)-F(2)=(9-12)-\left(-\frac{16}{3}\right)=\frac{7}{3}$.</li>
+      <li><b>Sumamos.</b> $A=\dfrac{16}{3}+\dfrac{7}{3}=\dfrac{23}{3}\approx 7.67$.</li>
+    </ol>
+    <p class="resultado">Resultado: $A=\frac{23}{3}\approx 7.67\ u^2$.</p>
+    <p class="aviso"><b>Error común:</b> integrar de $0$ a $3$ de una sola vez da $-3$, que no es un área, porque la parte negativa le resta a la positiva.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>Ejemplo 4: área entre $f(x)=x+2$ y $g(x)=x^2$</h3>
+    <ol class="pasos">
+      <li><b>Planteamiento.</b> Queremos el área de la región que queda encerrada entre la recta $f(x)=x+2$ y la parábola $g(x)=x^2$.</li>
+      <li><b>Intersección.</b> Igualamos $f(x)=g(x)$: $$x+2=x^2\ \Rightarrow\ x^2-x-2=0\ \Rightarrow\ (x-2)(x+1)=0$$ Los puntos de corte son $x=-1$ y $x=2$, y esos serán nuestros límites.</li>
+      <li><b>Tabla de valores y gráfica.</b> Con la tabla vemos en qué puntos se cruzan y cuál función queda arriba.<figure class="grafico" id="g-ej4"></figure></li>
+      <li><b>Integral.</b> En $x=0$, $f=2$ y $g=0$, así que la recta está arriba. Restamos arriba menos abajo: $$A=\int_{-1}^{2}\big[(x+2)-x^2\big]dx=\int_{-1}^{2}\big(-x^2+x+2\big)dx$$</li>
+      <li><b>Resolvemos.</b> $F(x)=-\dfrac{x^3}{3}+\dfrac{x^2}{2}+2x$. Evaluamos: $F(2)=-\frac{8}{3}+2+4=\frac{10}{3}$ y $F(-1)=\frac{1}{3}+\frac{1}{2}-2=-\frac{7}{6}$. Restamos: $A=\frac{10}{3}+\frac{7}{6}=\frac{27}{6}=\frac{9}{2}$.</li>
+    </ol>
+    <p class="resultado">Resultado: $A=\frac{9}{2}=4.5\ u^2$.</p>
+  </article>
+
+  <article class="hoja">
+    <h3>Ejemplo 5: área entre $f(x)=2x^2-1$ y $g(x)=x+1$ (con decimales)</h3>
+    <p>Este es igual de largo que el anterior, pero los puntos de corte no son enteros. Entonces usamos la fórmula general y la calculadora, como hacemos en las tareas.</p>
+    <ol class="pasos">
+      <li><b>Planteamiento.</b> Queremos el área entre la parábola $f(x)=2x^2-1$ y la recta $g(x)=x+1$.</li>
+      <li><b>Intersección.</b> Igualamos $f(x)=g(x)$: $$2x^2-1=x+1\ \Rightarrow\ 2x^2-x-2=0$$ No se factoriza fácil, así que usamos la fórmula general: $$x=\frac{1\pm\sqrt{17}}{4}\ \Rightarrow\ x_1\approx 1.28,\quad x_2\approx -0.78$$</li>
+      <li><b>Tabla de valores y gráfica.</b> Elegimos valores enteros alrededor de los cortes y marcamos los puntos de intersección.<figure class="grafico" id="g-ej5"></figure></li>
+      <li><b>Integral.</b> En $x=0$, $g=1$ y $f=-1$, así que la recta está arriba: $$A=\int_{-0.78}^{1.28}\big[(x+1)-(2x^2-1)\big]dx=\int_{-0.78}^{1.28}\big(-2x^2+x+2\big)dx$$</li>
+      <li><b>Resolvemos.</b> $F(x)=-\dfrac{2x^3}{3}+\dfrac{x^2}{2}+2x$. Con la calculadora: $F(1.28)\approx 1.98$ y $F(-0.78)\approx -0.94$. Restamos: $A\approx 1.98-(-0.94)=2.92$.</li>
+    </ol>
+    <p class="resultado">Resultado: $A\approx 2.92\ u^2$.</p>
+  </article>
+</section>
+
+<!-- ============ PROBLEMAS ============ -->
+<section id="problemas">
+  <h2>Problemas propuestos ⏾⋆. ̊</h2>
+  <p>Están ordenados de menor a mayor dificultad. Empecemos con lo bueno. Intenta resolver estos problemas en papel, después abre "Ver respuesta y procedimiento" para comparar tu trabajo paso a paso.</p>
+
+  <article class="hoja">
+    <h3>Problema 1 <span class="nivel">Básico</span></h3>
+    <p>Calcula $\displaystyle\int_0^2 (3x^2+1)\,dx$.</p>
+    <details><summary>Ver respuesta y procedimiento</summary>
+      <ol class="pasos">
+        <li><b>Integramos término a término.</b> $\int 3x^2\,dx=3\cdot\frac{x^3}{3}=x^3$ y $\int 1\,dx=x$. Así, $F(x)=x^3+x$.</li>
+        <li><b>Evaluamos.</b> $F(2)=8+2=10$ y $F(0)=0$.</li>
+        <li><b>Restamos.</b> $F(2)-F(0)=10-0=10$.</li>
+      </ol>
+      <p class="resultado">Respuesta: $10$</p>
+    </details>
+  </article>
+
+  <article class="hoja">
+    <h3>Problema 2 <span class="nivel">Básico</span></h3>
+    <p>Halla el área bajo la curva $y=x^3$ entre $x=0$ y $x=2$.</p>
+    <details><summary>Ver respuesta y procedimiento</summary>
+      <ol class="pasos">
+        <li><b>Revisamos el signo.</b> Para $x\ge0$, $x^3\ge0$: el área es la integral.</li>
+        <li><b>Planteamos.</b> $A=\int_0^2 x^3\,dx$.</li>
+        <li><b>Antiderivada</b> (regla de potencias con $n=3$): $F(x)=\dfrac{x^4}{4}$.</li>
+        <li><b>Evaluamos.</b> $F(2)=\dfrac{16}{4}=4$ y $F(0)=0$.</li>
+        <li><b>Restamos.</b> $A=4-0=4$.</li>
+      </ol>
+      <p class="resultado">Respuesta: $A=4$ unidades cuadradas.</p>
+    </details>
+  </article>
+
+  <article class="hoja">
+    <h3>Problema 3 <span class="nivel">Intermedio</span></h3>
+    <p>Calcula el área de la región limitada por $y=4-x^2$ y el eje $x$.</p>
+    <details><summary>Ver respuesta y procedimiento</summary>
+      <ol class="pasos">
+        <li><b>Hallamos los límites.</b> La región termina donde la curva corta el eje $x$: $4-x^2=0\Rightarrow x=\pm2$. Entonces $a=-2$ y $b=2$.</li>
+        <li><b>Revisamos el signo.</b> En $x=0$, $f(0)=4>0$. La parábola está sobre el eje en todo $[-2,2]$.</li>
+        <li><b>Planteamos.</b> $A=\int_{-2}^{2}(4-x^2)\,dx$.</li>
+        <li><b>Antiderivada.</b> $F(x)=4x-\dfrac{x^3}{3}$.</li>
+        <li><b>Evaluamos.</b> $F(2)=8-\frac{8}{3}=\frac{16}{3}$ y $F(-2)=-8+\frac{8}{3}=-\frac{16}{3}$.</li>
+        <li><b>Restamos.</b> $A=\frac{16}{3}-\left(-\frac{16}{3}\right)=\frac{32}{3}$.</li>
+      </ol>
+      <p class="resultado">Respuesta: $A=\frac{32}{3}\approx10.67$ unidades cuadradas.</p>
+    </details>
+  </article>
+
+  <article class="hoja">
+    <h3>Problema 4 <span class="nivel">Intermedio</span></h3>
+    <p>Halla el área entre las curvas $y=x$ y $y=x^2$ de $x=0$ a $x=1$.</p>
+    <details><summary>Ver respuesta y procedimiento</summary>
+      <ol class="pasos">
+        <li><b>Decidimos cuál está arriba.</b> En $x=0.5$: la recta vale $0.5$ y la parábola $0.25$. La recta $y=x$ está arriba.</li>
+        <li><b>Planteamos</b> (arriba menos abajo): $A=\int_0^1 (x-x^2)\,dx$.</li>
+        <li><b>Antiderivada.</b> $F(x)=\dfrac{x^2}{2}-\dfrac{x^3}{3}$.</li>
+        <li><b>Evaluamos.</b> $F(1)=\frac12-\frac13=\frac16$ y $F(0)=0$.</li>
+        <li><b>Restamos.</b> $A=\frac16-0=\frac16$.</li>
+      </ol>
+      <p class="resultado">Respuesta: $A=\frac{1}{6}\approx0.167$ unidades cuadradas.</p>
+    </details>
+  </article>
+
+  <article class="hoja">
+    <h3>Problema 5 <span class="nivel">Avanzado</span></h3>
+    <p>Calcula el área entre $y=x^2-1$ y el eje $x$, de $x=0$ a $x=2$.</p>
+    <details><summary>Ver respuesta y procedimiento</summary>
+      <ol class="pasos">
+        <li><b>Encontramos el cruce con el eje.</b> $x^2-1=0\Rightarrow x=\pm1$; solo $x=1$ está en $[0,2]$. La curva está bajo el eje en $[0,1]$ y sobre el eje en $[1,2]$.</li>
+        <li><b>Antiderivada.</b> $F(x)=\dfrac{x^3}{3}-x$.</li>
+        <li><b>Trozo $[0,1]$.</b> $F(1)=\frac13-1=-\frac23$ y $F(0)=0$, así que la integral es $-\frac23$. El área es $\frac23$.</li>
+        <li><b>Trozo $[1,2]$.</b> $F(2)=\frac83-2=\frac23$, entonces $F(2)-F(1)=\frac23-\left(-\frac23\right)=\frac43$.</li>
+        <li><b>Sumamos las áreas.</b> $A=\frac23+\frac43=2$.</li>
+      </ol>
+      <p class="resultado">Respuesta: $A=2$ unidades cuadradas.</p>
+    </details>
+  </article>
+  <article class="hoja">
+    <h3>Verifica tus respuestas</h3>
+    <ul>
+      <li>Problema 1: $10$</li>
+      <li>Problema 2: $4$ unidades cuadradas</li>
+      <li>Problema 3: $\frac{32}{3}\approx10.67$ unidades cuadradas</li>
+      <li>Problema 4: $\frac{1}{6}\approx0.167$ unidades cuadradas</li>
+      <li>Problema 5: $2$ unidades cuadradas</li>
+    </ul>
+    <p>Si tu resultado es distinto, abre el procedimiento del problema y compara paso a paso para ubicar dónde cambió.</p>
+  </article>
+</section>
+
+<!-- ============ VIDEOS ============ -->
+<section id="videos">
+  <h2>Videos ⏾⋆. ̊</h2>
+  <p>En estos videos podemos complementar todo el contenido del curso. Estos te pueden servir para ver el razonamiento y escuchar la explicación con calma, y puedes pausarlos o repetirlos las veces que necesites. Siéntete libre de aprender a tu ritmo.</p>
+  <div class="hoja">
+    <h3>Cómo aprovechar los videos</h3>
+    <ul>
+      <li>Lee todo el contenido antes de ver el video, de esta forma podrás darle forma a lo que planteamos.</li>
+      <li>Pausa y repite cuando algo no haya quedado claro. Es importante para comprender los conceptos.</li>
+      <li>Si algo no queda claro, repite esa parte o baja la velocidad para ir más despacio.</li>
+    </ul>
+  </div>
+  <!-- Para insertar un video: sube el video a YouTube (con acceso público o "no listado"), copia el código de "Insertar" y reemplaza el <div class="marco"> de la tarjeta por ese <iframe>. Cambia también el título y la duración. -->
+  <div class="videos">
+    <article class="hoja video">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/sgc466z7dow?si=ohVCDihn3u_jocf-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h3>Video 1 - Área Bajo la Curva</h3>
+      <p class="meta">Duración: mm:ss 1:01</p>
+    </article>
+    <article class="hoja video">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/reBDaBFNFjo?si=IhZMLvw37NI-KAXE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h3>Video 2 - Área entre f(x) y X</h3>
+      <p class="meta">Duración: mm:ss 1:01</p>
+    </article>
+    <article class="hoja video">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/sgc466z7dow?si=49nTzMNYwAy07dUq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <h3>Video 3 - Área entre Curvas</h3>
+      <p class="meta">Duración: mm:ss 1:01</p>
+    </article>
+  </div>
+  <div class="hoja">
+    <h3>Después de los videos</h3>
+    <p>Los videos son un apoyo, y el aprendizaje se consolida practicando. Resuelve los problemas propuestos sin mirar la solución y luego compara tu procedimiento. Cuando te sientas listo, responde las preguntas de repaso para comprobar lo aprendido.</p>
+    <div class="acciones">
+      <button class="btn peq" data-ir="problemas">Ir a los problemas</button>
+      <button class="btn peq" data-ir="preguntas">Ir a las preguntas</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREGUNTAS ============ -->
+<section id="preguntas">
+  <h2>Preguntas ⏾⋆. ̊</h2>
+  <p>Vamos a ponerte a prueba. Responde las siguientes preguntas según lo aprendido en este camino. Cada una te dice si acertaste y por qué.</p>
+  <p class="puntaje" id="puntaje">Respondidas: 0/12 · Aciertos: 0</p>
+  <div id="quiz"></div>
+  <article class="hoja">
+    <h3>Preguntas frecuentes</h3>
+    <details><summary>¿Qué significa $dx$ al final de una integral?</summary><p>Indica la variable respecto a la cual se integra, y representa un ancho diminuto en el eje $x$.</p></details>
+    <details><summary>¿El área puede salir negativa?</summary><p>Un área nunca es negativa, pero una integral sí puede serlo si la curva queda debajo del eje $x$. Por eso en esos casos se toma el valor absoluto, como en el tema 7.</p></details>
+    <details><summary>¿Por qué no hace falta la constante $C$ en la integral definida?</summary><p>Porque al evaluar $F(b)-F(a)$ la constante aparece sumando en ambos y se cancela.</p></details>
+  </article>
+</section>
+
+<!-- ============ FUENTES ============ -->
+<section id="fuentes">
+  <h2>Fuentes consultadas ⏾⋆. ̊</h2>
+  <p>Estos son los materiales que me sirvieron de apoyo para elaborar este minicurso.</p>
+  <article class="hoja">
+    <h3>Libros</h3>
+    <ul class="refs">
+      <li>Stewart, J. <i>Cálculo de una variable: trascendentes tempranas</i>. Cengage Learning.</li>
+      <li>Thomas, G. B. <i>Cálculo: una variable</i>. Pearson Educación.</li>
+    </ul>
+  </article>
+  <article class="hoja">
+    <h3>Páginas web</h3>
+    <ul class="refs">
+      <li>Khan Academy en español, sección de cálculo integral: <a href="https://es.khanacademy.org" target="_blank" rel="noopener">es.khanacademy.org</a></li>
+      <li>Dawkins, P. <i>Paul's Online Math Notes: Calculus</i>, Lamar University: <a href="https://tutorial.math.lamar.edu" target="_blank" rel="noopener">tutorial.math.lamar.edu</a></li>
+    </ul>
+  </article>
+</section>
+
+</main>
+<footer>Gracias por participar en el curso c:</footer>
+
+<script>
+// ---- Navegación por pestañas ----
+const botones=[...document.querySelectorAll('nav button')];
+const secciones=[...document.querySelectorAll('main > section')];
+function ir(id){
+  secciones.forEach(s=>s.classList.toggle('activa',s.id===id));
+  botones.forEach(b=>b.setAttribute('aria-selected',b.dataset.ir===id));
+  history.replaceState(null,'','#'+id);
+  window.scrollTo({top:0});
+  if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise();
+}
+document.querySelectorAll('[data-ir]').forEach(b=>b.addEventListener('click',()=>ir(b.dataset.ir)));
+if(location.hash && document.getElementById(location.hash.slice(1))) ir(location.hash.slice(1));
+
+// ---- Gráfica interactiva: área bajo y = x^2 entre 0 y b ----
+const svg=document.getElementById('grafica'),slider=document.getElementById('b');
+const X0=34,Y0=200,SX=96,SY=20; // píxeles por unidad
+const px=x=>X0+x*SX, py=y=>Y0-y*SY;
+function dibujar(){
+  const b=parseFloat(slider.value);
+  let curva='',area=`M${px(0)},${py(0)} `;
+  for(let x=0;x<=3.2001;x+=0.05){curva+=(x?'L':'M')+px(x).toFixed(1)+','+py(x*x).toFixed(1)+' ';}
+  for(let x=0;x<=b+1e-9;x+=0.05){area+=`L${px(x).toFixed(1)},${py(x*x).toFixed(1)} `;}
+  area+=`L${px(b)},${py(b*b)} L${px(b)},${py(0)} Z`;
+  svg.innerHTML=
+   `<path d="${area}" fill="var(--area-suave)" stroke="var(--area)" stroke-width="1"/>`+
+   `<line x1="${X0}" y1="${Y0}" x2="330" y2="${Y0}" stroke="var(--ejes)" stroke-width="2"/>`+
+   `<line x1="${X0}" y1="${Y0}" x2="${X0}" y2="10" stroke="var(--ejes)" stroke-width="2"/>`+
+   `<path d="${curva}" fill="none" stroke="var(--ejes)" stroke-width="3"/>`+
+   `<line x1="${px(b)}" y1="${py(0)}" x2="${px(b)}" y2="${py(b*b)}" stroke="var(--marcador)" stroke-width="3"/>`+
+   `<text x="${px(b)}" y="218" text-anchor="middle" font-size="13" fill="var(--ejes)">b</text>`+
+   `<text x="${X0-6}" y="${Y0+16}" font-size="13" fill="var(--ejes)">0</text>`+
+   `<text x="300" y="30" font-size="14" fill="var(--ejes)">y = x²</text>`;
+  document.getElementById('bval').textContent=b.toFixed(1);
+  document.getElementById('lectura').textContent=`Área = b³/3 = ${(b**3/3).toFixed(2)} unidades cuadradas`;
+}
+slider.addEventListener('input',dibujar); dibujar();
+
+// ---- Quiz ----
+const PREG=[
+ {q:'¿Cuál es el valor de $\\sum_{i=1}^{4} 2i$?',o:['$10$','$20$','$16$'],c:1,e:'2 + 4 + 6 + 8 = 20.'},
+ {q:'Si $f(x)\\ge 0$, ¿qué representa $\\int_a^b f(x)\\,dx$?',o:['La pendiente de $f$ en $a$','El área bajo la curva entre $a$ y $b$','La derivada de $f$'],c:1,e:'La integral definida mide el área entre la curva y el eje x.'},
+ {q:'Una antiderivada de $6x^2$ es:',o:['$12x$','$2x^3$','$6x^3$'],c:1,e:'Al derivar $2x^3$ se obtiene $6x^2$.'},
+ {q:'¿Cuánto vale $\\int_0^1 4x\\,dx$?',o:['$1$','$4$','$2$'],c:2,e:'$[2x^2]_0^1 = 2$.'},
+ {q:'¿Cuánto vale $\\int_a^a f(x)\\,dx$?',o:['$f(a)$','$0$','$1$'],c:1,e:'Una región sin ancho no tiene área.'},
+ {q:'Según el Teorema Fundamental del Cálculo, $\\int_a^b f(x)\\,dx$ es igual a:',o:['$F(a)-F(b)$','$F(b)-F(a)$','$F(b)+F(a)$'],c:1,e:'Se evalúa la antiderivada en el límite superior y se resta su valor en el inferior.'},
+ {q:'¿Cuánto vale $\\int_1^2 x\\,dx$?',o:['$\\frac{3}{2}$','$\\frac{1}{2}$','$2$'],c:0,e:'$[x^2/2]_1^2 = 2 - \\frac12 = \\frac32$.'},
+ {q:'Si $f(x)<0$ en todo $[a,b]$, el área entre la curva y el eje $x$ es:',o:['$\\int_a^b f(x)\\,dx$','$-\\int_a^b f(x)\\,dx$','$0$'],c:1,e:'La integral sale negativa, así que se cambia el signo para obtener un área positiva.'},
+ {q:'¿Por qué se escribe $+C$ en la integral indefinida?',o:['Porque la derivada de una constante es $0$, así que hay infinitas antiderivadas','Por costumbre, no tiene significado','Para que la integral sea positiva'],c:0,e:'Las antiderivadas de una función difieren en una constante.'},
+ {q:'Si $f\\ge g$ en $[a,b]$, el área entre ambas curvas es:',o:['$\\int_a^b [f+g]\\,dx$','$\\int_a^b [g-f]\\,dx$','$\\int_a^b [f-g]\\,dx$'],c:2,e:'Se integra la curva de arriba menos la de abajo.'},
+ {q:'¿Cuánto vale $\\int_0^2 3\\,dx$?',o:['$6$','$3$','$2$'],c:0,e:'Es un rectángulo de base 2 y altura 3: área 6.'},
+ {q:'¿Cuál es $\\int \\frac{1}{x}\\,dx$?',o:['$\\ln|x|+C$','$x^{-1}+C$','$\\frac{x^2}{2}+C$'],c:0,e:'La regla de potencias no aplica con $n=-1$; esta integral da el logaritmo natural.'}
+];
+let aciertos=0,resp=0;
+const cont=document.getElementById('quiz');
+PREG.forEach((p,i)=>{
+  const d=document.createElement('article');d.className='hoja';
+  d.innerHTML='<h3>Pregunta '+(i+1)+'</h3><p>'+p.q+'</p>'+p.o.map((t,j)=>'<button class="opcion" data-j="'+j+'">'+t+'</button>').join('')+'<p class="retro" aria-live="polite"></p>';
+  let hecho=false;
+  d.querySelectorAll('.opcion').forEach(b=>b.addEventListener('click',()=>{
+    if(hecho)return;hecho=true;
+    const ok=+b.dataset.j===p.c;
+    b.classList.add(ok?'ok':'mal');
+    if(!ok)d.querySelectorAll('.opcion')[p.c].classList.add('ok');
+    const r=d.querySelector('.retro');r.textContent=(ok?'Correcto. ':'Casi. ')+p.e;
+    if(ok)aciertos++;resp++;
+    document.getElementById('puntaje').textContent='Respondidas: '+resp+'/'+PREG.length+' · Aciertos: '+aciertos;
+    if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([r]);
+  }));
+  cont.appendChild(d);
+});
+
+// ---- Gráficas con tabla de valores ----
+const fm=v=>String(Math.round(v*100)/100);
+function graficar(id,c){
+  const el=document.getElementById(id); if(!el) return;
+  const W=420,H=270,L=36,R=14,T=14,B=28,[x0,x1]=c.x,[y0,y1]=c.y;
+  const sx=x=>L+(x-x0)/(x1-x0)*(W-L-R), sy=y=>H-B-(y-y0)/(y1-y0)*(H-T-B);
+  let s=`<clipPath id="cp-${id}"><rect x="${L}" y="${T}" width="${W-L-R}" height="${H-T-B}"/></clipPath>`;
+  for(let x=Math.ceil(x0);x<=x1;x++) s+=`<line x1="${sx(x)}" y1="${T}" x2="${sx(x)}" y2="${H-B}" stroke="var(--linea)"/><text x="${sx(x)}" y="${H-B+16}" text-anchor="middle" font-size="11" fill="var(--suave)">${x}</text>`;
+  for(let y=Math.ceil(y0);y<=y1;y++) s+=`<line x1="${L}" y1="${sy(y)}" x2="${W-R}" y2="${sy(y)}" stroke="var(--linea)"/><text x="${L-6}" y="${sy(y)+4}" text-anchor="end" font-size="11" fill="var(--suave)">${y}</text>`;
+  if(y0<=0&&y1>=0) s+=`<line x1="${L}" y1="${sy(0)}" x2="${W-R}" y2="${sy(0)}" stroke="var(--ejes)" stroke-width="2"/>`;
+  if(x0<=0&&x1>=0) s+=`<line x1="${sx(0)}" y1="${T}" x2="${sx(0)}" y2="${H-B}" stroke="var(--ejes)" stroke-width="2"/>`;
+  s+=`<g clip-path="url(#cp-${id})">`;
+  (c.shade||[]).forEach(z=>{
+    const f=z.f||c.fns[0].f,g=z.g||(()=>0),N=60;let top='',bot='';
+    for(let i=0;i<=N;i++){const x=z.a+(z.b-z.a)*i/N;top+=`${i?'L':'M'}${sx(x)},${sy(f(x))} `;bot=`L${sx(x)},${sy(g(x))} `+bot;}
+    s+=`<path d="${top+bot}Z" fill="${z.color||'var(--area-suave)'}" stroke="none"/>`;
+  });
+  (c.lim||[]).forEach(x=>s+=`<line x1="${sx(x)}" y1="${T}" x2="${sx(x)}" y2="${H-B}" stroke="var(--marcador)" stroke-dasharray="4 4"/>`);
+  c.fns.forEach((fn,k)=>{
+    let d='';for(let i=0;i<=160;i++){const x=x0+(x1-x0)*i/160;d+=`${i?'L':'M'}${sx(x).toFixed(1)},${sy(fn.f(x)).toFixed(1)} `;}
+    s+=`<path d="${d}" fill="none" stroke="${fn.color||(k?'#6FB1FF':'var(--ejes)')}" stroke-width="2.5"/>`;
+    (c.pts||[]).forEach(x=>s+=`<circle cx="${sx(x)}" cy="${sy(fn.f(x))}" r="4" fill="var(--marcador)" stroke="#04061A" stroke-width="1.5"/>`);
+  });
+  (c.marks||[]).forEach(x=>{const y=c.fns[0].f(x);s+=`<circle cx="${sx(x)}" cy="${sy(y)}" r="5.5" fill="#FF8FAE" stroke="#fff" stroke-width="1.5"/><text x="${sx(x)}" y="${sy(y)+17}" text-anchor="middle" font-size="11" fill="#fff">(${fm(x)}, ${fm(y)})</text>`;});
+  s+='</g>';
+  c.fns.forEach((fn,k)=>s+=`<text x="${Math.min(sx(fn.lx)+4,W-R-4)}" y="${Math.max(sy(fn.f(fn.lx))-8,T+12)}" text-anchor="${sx(fn.lx)>W-90?'end':'start'}" font-size="12" fill="${fn.color||(k?'#6FB1FF':'var(--ejes)')}">${fn.name}</text>`);
+  const t=c.table;
+  el.innerHTML=`<div class="tabla-w"><table class="tabla"><tr><th>x</th>${t.rows.map(r=>`<th>${r.n}</th>`).join('')}</tr>${t.xs.map(x=>`<tr><td>${x}</td>${t.rows.map(r=>`<td>${fm(r.f(x))}</td>`).join('')}</tr>`).join('')}</table></div>`+
+    `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${c.cap}">${s}</svg><figcaption>${c.cap}</figcaption>`;
+}
+const P=(x)=>x*x, Q=(x)=>x*x-4, R1=(x)=>2*x+1, R2=(x)=>x+2, T1=(x)=>2*x*x-1, R3=(x)=>x+1;
+const G={
+ 'g-tabla1':{x:[-4,4],y:[-5,6],fns:[{f:Q,name:'y = x² − 4',lx:2.6}],pts:[-3,-2,-1,0,1,2,3],table:{xs:[-3,-2,-1,0,1,2,3],rows:[{n:'y = x² − 4',f:Q}]},cap:'Los siete puntos de la tabla, unidos con una curva suave. Corta el eje x en −2 y 2.'},
+ 'g-tabla2':{x:[-1,4],y:[-1,8],fns:[{f:R1,name:'y = 2x + 1',lx:2.6}],pts:[0,1,2,3],table:{xs:[0,1,2,3],rows:[{n:'y = 2x + 1',f:R1}]},cap:'Una recta: con dos puntos basta, y un tercero sirve para comprobar.'},
+ 'g-ej1':{x:[-0.5,3.5],y:[-1,10],fns:[{f:P,name:'y = x²',lx:2.5}],shade:[{a:0,b:3}],lim:[0,3],pts:[0,1,2,3],table:{xs:[0,1,2,3],rows:[{n:'y = x²',f:P}]},cap:'Región sombreada: área bajo y = x² entre x = 0 y x = 3.'},
+ 'g-ej2':{x:[-0.5,4.5],y:[-1,10],fns:[{f:R1,name:'y = 2x + 1',lx:3}],shade:[{a:1,b:3}],lim:[1,3],pts:[1,2,3],table:{xs:[1,2,3],rows:[{n:'y = 2x + 1',f:R1}]},cap:'Región sombreada: un trapecio entre x = 1 y x = 3.'},
+ 'g-ej3':{x:[-0.5,3.5],y:[-5,6],fns:[{f:Q,name:'y = x² − 4',lx:2.6}],shade:[{a:0,b:2,color:'rgba(255,143,174,.38)'},{a:2,b:3}],lim:[2],marks:[2],pts:[0,1,2,3],table:{xs:[0,1,2,3],rows:[{n:'y = x² − 4',f:Q}]},cap:'En rosa, la parte bajo el eje x (de 0 a 2); en violeta, la parte sobre el eje (de 2 a 3). Se calculan por separado.'},
+ 'g-ej4':{x:[-2,3.5],y:[-1,9],fns:[{f:R2,name:'f(x) = x + 2',lx:1.6},{f:P,name:'g(x) = x²',lx:2.7}],shade:[{a:-1,b:2,f:R2,g:P}],lim:[-1,2],marks:[-1,2],pts:[-2,-1,0,1,2,3],table:{xs:[-2,-1,0,1,2,3],rows:[{n:'f(x) = x + 2',f:R2},{n:'g(x) = x²',f:P}]},cap:'Las curvas se cruzan en (−1, 1) y (2, 4). Entre esos puntos, la recta queda arriba.'},
+ 'g-ej5':{x:[-2,2.5],y:[-2,8],fns:[{f:T1,name:'f(x) = 2x² − 1',lx:1.75},{f:R3,name:'g(x) = x + 1',lx:-1.7}],shade:[{a:-0.78078,b:1.28078,f:R3,g:T1}],lim:[-0.78078,1.28078],marks:[-0.78078,1.28078],pts:[-2,-1,0,1,2],table:{xs:[-2,-1,0,1,2],rows:[{n:'f(x) = 2x² − 1',f:T1},{n:'g(x) = x + 1',f:R3}]},cap:'Los puntos de corte no son enteros: x ≈ −0.78 y x ≈ 1.28. En ese tramo, la recta queda arriba de la parábola.'}
+};
+Object.keys(G).forEach(k=>graficar(k,G[k]));
+</script>
+</body>
+</html>

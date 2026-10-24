@@ -159,3 +159,17 @@ dd{margin:0;color:var(--suave);font-size:1rem}
 .refs{padding-left:1.3em}
 .refs li{margin:.7em 0;max-width:72ch}
 .refs a{color:#B3A8FF}
+
+/* Cuando el recuadro ya tiene un video de YouTube, se quita el borde punteado */
+.marco:has(iframe){border:0;padding:0;background:none;overflow:hidden}
+.marco iframe{border-radius:var(--radio)}
+
+/* Ajuste: el video de YouTube debe ocupar solo el ancho de su tarjeta */
+.videos>*,.video{min-width:0}
+.marco:has(iframe){display:block;aspect-ratio:auto}
+.marco iframe{display:block;width:100%;height:auto;aspect-ratio:16/9}
+
+/* Refuerzo: cualquier video dentro de una tarjeta se ajusta a su ancho,
+   aunque el iframe no esté dentro del recuadro .marco */
+.video{overflow:hidden}
+.video iframe{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:16/9;border:0;border-radius:var(--radio);margin-bottom:12px}
